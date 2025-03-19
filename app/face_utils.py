@@ -8,7 +8,7 @@ def register_face(image_path, user_id):
     encodings = face_recognition.face_encodings(image)
 
     if len(encodings) == 0:
-        return {"message": "Wajah tidak terdeteksi"}
+        return {"message": "not_detected"}
 
     save_encoding(user_id, encodings[0])  # Simpan encoding pertama
 
@@ -18,13 +18,13 @@ def recognize_face(user_id, image_path):
     known_encodings = load_encodings(user_id)
     
     if not known_encodings:
-        return {"message": "Wajah belum terdaftar"}
+        return {"message": "not_registered"}
 
     image = face_recognition.load_image_file(image_path)
     unknown_encodings = face_recognition.face_encodings(image)
 
     if len(unknown_encodings) == 0:
-        return {"message": "Wajah tidak terdeteksi"}
+        return {"message": "not_detected"}
 
     results = {}
     for user_id, known_encoding in known_encodings.items():
@@ -35,4 +35,4 @@ def recognize_face(user_id, image_path):
 
     recognized = [user_id for user_id, matched in results.items() if matched]
 
-    return {"message": "Mencocokan Wajah Berhasil" if recognized else "Wajah tidak cocok"}
+    return {"message": "recognized" if recognized else "not_recognized"}
