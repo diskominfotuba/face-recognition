@@ -35,4 +35,4 @@ def recognize_face(user_id, image_path):
 
     recognized = [user_id for user_id, matched in results.items() if matched]
 
-    return {"recognized_faces": recognized if recognized else "Unknown face"}
+    return {"recognized_faces": "recognized" if recognized else "unknown_face"}
